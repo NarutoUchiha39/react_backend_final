@@ -12,7 +12,7 @@ import fs from 'fs'
 import csv from 'fast-csv'
 import GuestEntries from "./DB_Schema/GuestEntries.mjs";
 // CreateDocument()
-const DATE_MAPPING = ["","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+const DATE_MAPPING = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 // const WebSocket = new Server(4001,{
 //     cors:{
 //     origin:"http://localhost:5173",
@@ -23,7 +23,7 @@ const DATE_MAPPING = ["","Monday","Tuesday","Wednesday","Thursday","Friday","Sat
 
 
 const app = express()
-// app.listen(3000,()=>{console.log(`App is running at port 3000`);})
+app.listen(3000,()=>{console.log(`App is running at port 3000`);})
 app.use(cors())
 app.use(express.json())
 app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true}))
@@ -87,7 +87,7 @@ app.get('/dates/getDates',async(req,res)=>{
                     build_date = "2023-"+ String(parseInt(build_date[1])+1) +"-"+build_date[0]
                     let cur_date = new Date(build_date)
                     console.log(cur_date.getDay())
-                    element['date'] = DATE_MAPPING [cur_date.getDay()+1];
+                    element['date'] = DATE_MAPPING [cur_date.getDay()];
             }
             )
         return res.status(200).json({result:resut})
@@ -109,7 +109,7 @@ app.get('/Cron-Check',async(req,res)=>{
         let date = new Date(resu.datetime)
         let date_month = String(date.getDate())+"-"+String(date.getMonth())
         let resut = await Count.find().catch(err=>{return res.json({"error":"couldnt fetch data"}).status(500)})
-        if(resut){
+        if(resut.length>0){
         let date_now = date.getDate()
         let check_point
         if(date_now - 7 >=0) {
@@ -128,8 +128,9 @@ app.get('/Cron-Check',async(req,res)=>{
 
         else{
             let cur_date = DATE_MAPPING[resu.day_of_week]
+            console.log(cur_date)
         await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0}).catch(err=>console.log(err))
-            return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:DATE_MAPPING[cur_date],student:0,teacher:0,unknown:0}).status(200)
+            return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0}).status(200)
         }
     }
 
