@@ -1,0 +1,24 @@
+a{
+    color:rgb(255, 255, 255);;
+}
+.wrapper-bar{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+.sideBar{
+    height: 100vh;
+    background-color: #202938;
+    margin-left: -2vh;
+
+}
+
+.feature
+{
+    position: relative;
+    top: 20vh;
+    left: 3vh;
+    
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+

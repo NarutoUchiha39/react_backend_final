@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+table{
+    position: absolute;
+    top: 17%;
+    width: 70%;
+    max-height: 70%;
+    box-shadow: 0 0 40px 0 rgba(0,0,0,.15);
+    left: 17%;
+    border-collapse: collapse;
+    border-radius: 20px;
+
+}
+
+.oo
+{
+    overflow-y: scroll;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+th{
+    background-color: #6c7ae0;
+    color: #fff;
+    font-family: 'Lato';
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    font-size: larger;
+    letter-spacing: 1px;
+    height: 60px;
+    
+}
+
+
+tr:nth-child(even){
+    background-color: #f8f6ff;
+}
+th:first-child{
+    border-top-left-radius: 20px;
+    /* border-bottom-left-radius: 20px; */
+}
+
+th:last-child{
+   
+        border-top-right-radius: 20px;
+        /* border-bottom-right-radius: 20px; */
+    
+}
+tr{
+    height: 70px;
+}
+
+td{
+
+    text-align: center;
+}
+
+.Message{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: larger;
+}
