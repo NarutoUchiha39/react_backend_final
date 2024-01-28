@@ -309,5 +309,4 @@ app.get('/logs/getGuestUsers',async(req,res)=>{
         res.status(200).json(result)
 })
 
-module.exports = app
-
+export default app
