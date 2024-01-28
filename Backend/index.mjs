@@ -109,7 +109,7 @@ app.get('/Cron-Check',async(req,res)=>{
         let date = new Date(resu.datetime)
         let date_month = String(date.getDate())+"-"+String(date.getMonth())
         let resut = await Count.find().catch(err=>{return res.json({"error":"couldnt fetch data"}).status(500)})
-        if(resut.length!=0){
+        if(resut){
         let date_now = date.getDate()
         let check_point
         if(date_now - 7 >=0) {
