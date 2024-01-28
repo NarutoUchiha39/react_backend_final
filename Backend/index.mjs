@@ -79,7 +79,7 @@ app.get('/dates/getDates',async(req,res)=>{
 
         resut = resut.filter(item=>check_point<=parseInt(item['date'].split('-')[0]) && parseInt(item['date'].split('-')[0])<=date_now)
         resut.sort((a,b)=>parseInt(a['date'].split('-')[0]) - parseInt(b['date'].split('-')[0]))
-        
+        console.log(resut)
         resut.forEach((element)=>{
             
             let build_date = element['date'].split('-')
@@ -119,7 +119,7 @@ app.get('/Cron-Check',async(req,res)=>{
             check_point = 1
         }
 
-        resut = resut.filter(item=>check_point<parseInt(item['date'].split('-')[0]) && parseInt(item['date'].split('-')[0])<=date_now)
+        resut = resut.filter(item=>check_point<=parseInt(item['date'].split('-')[0]) && parseInt(item['date'].split('-')[0])<=date_now)
         resut.sort((a,b)=>b['in'] - a['in'])
         resut['date'] = DATE_MAPPING[resu.day_of_week]
         await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0}).catch(err=>console.log(err))
@@ -130,7 +130,7 @@ app.get('/Cron-Check',async(req,res)=>{
             let cur_date = DATE_MAPPING[resu.day_of_week]
             console.log(cur_date)
         await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0}).catch(err=>console.log(err))
-            return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0}).status(200)
+            return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0,result:resu}).status(200)
         }
     }
 
