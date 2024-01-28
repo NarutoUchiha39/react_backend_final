@@ -23,7 +23,7 @@ const DATE_MAPPING = ["","Monday","Tuesday","Wednesday","Thursday","Friday","Sat
 
 
 const app = express()
-app.listen(3000,()=>{console.log(`App is running at port 3000`);})
+// app.listen(3000,()=>{console.log(`App is running at port 3000`);})
 app.use(cors())
 app.use(express.json())
 app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true}))
@@ -309,4 +309,5 @@ app.get('/logs/getGuestUsers',async(req,res)=>{
         res.status(200).json(result)
 })
 
+module.exports = app
 
