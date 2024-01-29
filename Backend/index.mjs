@@ -231,8 +231,7 @@ app.post('/log/flow',async(req,res)=>
         //     console.log(res_count);
         // }
 
-        res.json({date:date_month,in:new_in,out:new_out})
-        res.status(200)
+        return res.json({date:date_month,in:new_in,out:new_out}).status(200)
     }
 
 
