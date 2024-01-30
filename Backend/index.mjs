@@ -28,7 +28,28 @@ app.use(cors())
 app.use(express.json())
 app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true}))
 
-//calculate_busiest_hour()
+app.get("/Cron-Check-Hourly",async(req,rse)=>{
+
+    let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
+            method:"GET",
+            ContentType:"application/json",
+        }).then((result)=>{return result.json()})
+        let date = new Date(resu.dateTime)
+        let date_month = String(date.getDate())+"-"+String(date.getMonth())
+        let result = await Count.findOne({date:date_month}).catch(err=>{return res.json({"error":"couldnt fetch data"}).status(500)})
+
+        let cur_count = result.in
+        let cur_count_busiest = result.busiest_hour_count
+        if(cur_count > cur_count_busiest){
+            Count.insertMany({in:result.in,out:result.out,teacher:result.teacher,student:result.student,unknown:result.unknown,busiest_hour:String(resu.hour),busiest_day:result.busiest_day})
+            
+            return res.json({"modified":true}).status(200)        
+        }else{
+        return res.json({"modified":false}).status(200)    
+        }
+        
+    
+})
 app.get("/connection/faces",async(req,res)=>{
 
     try{
@@ -129,7 +150,7 @@ app.get('/Cron-Check',async(req,res)=>{
         else{
             let cur_date = resu.dayOfWeek
             console.log(cur_date)
-        await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0}).catch(err=>console.log(err))
+        await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"0",busiest_day:cur_date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).catch(err=>console.log(err))
             return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0,result:resu}).status(200)
         }
     }
