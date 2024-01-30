@@ -36,7 +36,7 @@ app.get("/connection/faces",async(req,res)=>{
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
-        let date = new Date(resu.datetime)
+        let date = new Date(resu.dateTime)
         let date_month = String(date.getDate())+"-"+String(date.getMonth())
         let result = await Count.findOne({date:date_month}).catch(err=>{return res.json({"error":"couldnt fetch data"}).status(500)})
         if(result){
