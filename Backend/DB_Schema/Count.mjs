@@ -3,6 +3,7 @@ export default mongoose.model('Count',new mongoose.Schema({
     date:String,
     in:Number,
     out:Number,
+    busiest_hour_count:Number,
     busiest_hour:String,
     busiest_day:String,
     student:Number,
