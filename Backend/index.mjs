@@ -127,7 +127,7 @@ app.get('/Cron-Check',async(req,res)=>{
         }
 
         else{
-            let cur_date = DATE_MAPPING[resu.day_of_week]
+            let cur_date = resu.dayOfWeek
             console.log(cur_date)
         await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0}).catch(err=>console.log(err))
             return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0,result:resu}).status(200)
