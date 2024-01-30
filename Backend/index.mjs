@@ -143,15 +143,15 @@ app.get('/Cron-Check',async(req,res)=>{
         resut = resut.filter(item=>check_point<=parseInt(item['date'].split('-')[0]) && parseInt(item['date'].split('-')[0])<=date_now)
         resut.sort((a,b)=>b['in'] - a['in'])
         resut['date'] = resu.dayOfWeek
-        await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0}).catch(err=>console.log(err))
-        return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0}).status(200)
+        await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).catch(err=>console.log(err))
+        return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).status(200)
         }
 
         else{
             let cur_date = resu.dayOfWeek
             console.log(cur_date)
         await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"0",busiest_day:cur_date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).catch(err=>console.log(err))
-            return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0,result:resu}).status(200)
+            return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0,result:resu,busiest_hour_count:0}).status(200)
         }
     }
 
