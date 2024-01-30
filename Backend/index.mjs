@@ -28,7 +28,7 @@ app.use(cors())
 app.use(express.json())
 app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true}))
 
-app.get("/Cron-Check-Hourly",async(req,rse)=>{
+app.get("/Cron-Check-Hourly",async(req,res)=>{
 
     let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
             method:"GET",
