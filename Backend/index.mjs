@@ -32,7 +32,7 @@ app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true})
 app.get("/connection/faces",async(req,res)=>{
 
     try{
-        let resu = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata",{
+        let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
@@ -62,7 +62,7 @@ app.get('/dates/getDates',async(req,res)=>{
 
     try{
         let resut = await Count.find().catch(err=>{return res.json({"error":"couldnt fetch data"})})
-        let resu = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata",{
+        let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
@@ -102,7 +102,7 @@ app.get('/dates/getDates',async(req,res)=>{
 app.get('/Cron-Check',async(req,res)=>{
 
     try{
-        let resu = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata",{
+        let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
@@ -121,7 +121,7 @@ app.get('/Cron-Check',async(req,res)=>{
 
         resut = resut.filter(item=>check_point<=parseInt(item['date'].split('-')[0]) && parseInt(item['date'].split('-')[0])<=date_now)
         resut.sort((a,b)=>b['in'] - a['in'])
-        resut['date'] = DATE_MAPPING[resu.day_of_week]
+        resut['date'] = resu.dayOfWeek
         await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0}).catch(err=>console.log(err))
         return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0}).status(200)
         }
@@ -206,7 +206,7 @@ app.post('/log/FaceDetection',async(req,res)=>{
 app.post('/log/flow',async(req,res)=>
 {
     try{
-        let resu = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata",{
+        let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
