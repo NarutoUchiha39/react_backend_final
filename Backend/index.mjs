@@ -66,7 +66,7 @@ app.get('/dates/getDates',async(req,res)=>{
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
-        let date = new Date(resu.datetime)
+        let date = new Date(resu.dateTime)
 
         let date_now = date.getDate()
         let check_point
@@ -106,7 +106,7 @@ app.get('/Cron-Check',async(req,res)=>{
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
-        let date = new Date(resu.datetime)
+        let date = new Date(resu.dateTime)
         let date_month = String(date.getDate())+"-"+String(date.getMonth())
         let resut = await Count.find().catch(err=>{return res.json({"error":"couldnt fetch data"}).status(500)})
         if(resut.length>0){
@@ -210,7 +210,7 @@ app.post('/log/flow',async(req,res)=>
             method:"GET",
             ContentType:"application/json",
         }).then((result)=>{return result.json()})
-        let date = new Date(resu.datetime)    
+        let date = new Date(resu.dateTime)    
         let date_month = String(date.getDate())+"-"+String(date.getMonth())
         let in_people = req.body.in
         let out_people = req.body.out
