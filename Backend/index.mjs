@@ -84,7 +84,7 @@ app.get('/dates/getDates',async(req,res)=>{
             
             let build_date = element['date'].split('-')
                     
-                    build_date = "2023-"+ String(parseInt(build_date[1])+1) +"-"+build_date[0]
+                    build_date = "2024-"+ String(parseInt(build_date[1])+1) +"-"+build_date[0]
                     let cur_date = new Date(build_date)
                     console.log(cur_date.getDay())
                     element['date'] = DATE_MAPPING [cur_date.getDay()];
