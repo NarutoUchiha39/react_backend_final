@@ -238,8 +238,8 @@ app.post('/log/flow',async(req,res)=>
         let res_count = await Count.findOne({date:{$eq:date_month}}).catch(err=>{return res.json({"error":"couldnt fetch data"}).status(500)})
         let cur_in = res_count.in
         let cur_out = res_count.out
-        let new_in = cur_in + in_people
-        let new_out = cur_out + out_people
+        let new_in = in_people
+        let new_out = out_people
 
 
         await Count.updateOne({date:{$eq:date_month}},{in:new_in,out:new_out}).catch(err=>{return res.json({"error":"couldnt update data"})})
