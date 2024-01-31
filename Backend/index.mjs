@@ -41,7 +41,7 @@ app.get("/Cron-Check-Hourly",async(req,res)=>{
         let cur_count = result.in
         let cur_count_busiest = result.busiest_hour_count
         if(cur_count > cur_count_busiest){
-            Count.insertMany({in:result.in,out:result.out,teacher:result.teacher,student:result.student,unknown:result.unknown,busiest_hour:String(resu.hour),busiest_day:result.busiest_day})
+            Count.insertMany({in:result.in,out:result.out,teacher:result.teacher,student:result.student,unknown:result.unknown,busiest_hour:String(resu.hour),busiest_day:result.busiest_day,busiest_hour_count:cur_count})
             
             return res.json({"modified":true}).status(200)        
         }else{
@@ -143,15 +143,15 @@ app.get('/Cron-Check',async(req,res)=>{
         resut = resut.filter(item=>check_point<=parseInt(item['date'].split('-')[0]) && parseInt(item['date'].split('-')[0])<=date_now)
         resut.sort((a,b)=>b['in'] - a['in'])
         resut['date'] = resu.dayOfWeek
-        await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).catch(err=>console.log(err))
-        return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:resut.date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).status(200)
+        await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"0",busiest_day:resut.date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).catch(err=>console.log(err))
+        return res.json({date:date_month,in:0,out:0,busiest_hour:"0",busiest_day:resut.date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).status(200)
         }
 
         else{
             let cur_date = resu.dayOfWeek
             console.log(cur_date)
         await Count.insertMany({date:date_month,in:0,out:0,busiest_hour:"0",busiest_day:cur_date,student:0,teacher:0,unknown:0,busiest_hour_count:0}).catch(err=>console.log(err))
-            return res.json({date:date_month,in:0,out:0,busiest_hour:"",busiest_day:cur_date,student:0,teacher:0,unknown:0,result:resu,busiest_hour_count:0}).status(200)
+            return res.json({date:date_month,in:0,out:0,busiest_hour:"0",busiest_day:cur_date,student:0,teacher:0,unknown:0,result:resu,busiest_hour_count:0}).status(200)
         }
     }
 
