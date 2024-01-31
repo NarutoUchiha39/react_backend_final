@@ -9,7 +9,6 @@ import calculate_busiest_hour from "./automation/bussiest_hour.mjs";
 import CreateDocument from "./automation/startup.mjs"
 import { Server } from "socket.io";
 import fs from 'fs'
-import fetch from "node-fetch";
 import csv from 'fast-csv'
 import GuestEntries from "./DB_Schema/GuestEntries.mjs";
 // CreateDocument()
