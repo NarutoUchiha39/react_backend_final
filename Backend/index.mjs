@@ -41,7 +41,7 @@ app.get("/Cron-Check-Hourly",async(req,res)=>{
         let cur_count = result.in
         let cur_count_busiest = result.busiest_hour_count
         if(cur_count > cur_count_busiest){
-            Count.update({date:date_month},{$set:{busiest_hour:String(resu.hour)}})
+            await Count.update({date:date_month},{$set:{busiest_hour:String(resu.hour)}})
             
             return res.json({"modified":true}).status(200)        
         }else{
