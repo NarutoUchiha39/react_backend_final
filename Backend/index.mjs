@@ -29,7 +29,7 @@ app.use(express.json())
 app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true}))
 
 app.get("/Cron-Check-Hourly",async(req,res)=>{
-
+try{
     let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
             method:"GET",
             ContentType:"application/json",
@@ -47,7 +47,10 @@ app.get("/Cron-Check-Hourly",async(req,res)=>{
         }else{
         return res.json({"modified":false}).status(200)    
         }
-        
+}
+
+    catch{
+        return res.json({"error":"Couldnt fetch hourly count"}).status(500)
     
 })
 app.get("/connection/faces",async(req,res)=>{
