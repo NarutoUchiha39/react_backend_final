@@ -9,6 +9,7 @@ import calculate_busiest_hour from "./automation/bussiest_hour.mjs";
 import CreateDocument from "./automation/startup.mjs"
 import { Server } from "socket.io";
 import fs from 'fs'
+import fetch from "node-fetch";
 import csv from 'fast-csv'
 import GuestEntries from "./DB_Schema/GuestEntries.mjs";
 // CreateDocument()
@@ -29,6 +30,7 @@ app.use(express.json())
 app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true}))
 
 app.get("/Cron-Check-Hourly",async(req,res)=>{
+    try{
     let resu = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Calcutta",{
             method:"GET",
             ContentType:"application/json",
@@ -40,12 +42,19 @@ app.get("/Cron-Check-Hourly",async(req,res)=>{
         let cur_count = result.in
         let cur_count_busiest = result.busiest_hour_count
         if(cur_count > cur_count_busiest){
-            await Count.update({date:date_month},{$set:{busiest_hour:String(resu.hour),busiest_hour_count:cur_count}})
+            await Count.updateMany({date:date_month},{$set:{busiest_hour:String(resu.hour),busiest_hour_count:cur_count}})
             
             return res.json({"modified":true}).status(200)        
         }else{
         return res.json({"modified":false}).status(200)    
         }
+
+    }
+
+    catch(Exception){
+            return res.json({"error":Exception.message})
+    }
+}
 )
 app.get("/connection/faces",async(req,res)=>{
 
